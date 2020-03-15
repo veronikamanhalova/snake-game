@@ -41,12 +41,20 @@ snake[0] = {
     y: 9 * box
 };
 
+//defines elements of the game
+let game = {
+    scoreElement: document.querySelector("#score"),
+    lifeCountElement: document.querySelector("#lifeCount"),
+    score: 0,
+    lifeCount: 3
+};
+
 //control the snake
 document.addEventListener("keydown", direction);
 let d;
 
 //game freakvency
-let game = setInterval(draw, 130);
+let freakvency = setInterval(draw, 130);
 
 //---------------------------------
 
@@ -110,6 +118,8 @@ function draw() {
         if (objectColCheck(snake, knifes[i])) {
             knifes[i].x = Math.floor(Math.random() * colums) * box;
             knifes[i].y = Math.floor(Math.random() * rows) * box;
+            game.lifeCount--;
+            game.lifeCountElement.innerHTML = `${game.lifeCount}/3`;
         }
         ctx.drawImage(knifeImg, knifes[i].x, knifes[i].y);
     }
@@ -119,7 +129,9 @@ function draw() {
         if (objectColCheck(snake, oranges[i])) {
             oranges[i].x = Math.floor(Math.random() * colums) * box;
             oranges[i].y = Math.floor(Math.random() * rows) * box;
-            // snake.push(snakeX, snakeY);
+            game.score++;
+            game.scoreElement.textContent = `${game.score}`;
+            snake.push(snakeX, snakeY);
         }
         ctx.drawImage(orangeImg, oranges[i].x, oranges[i].y);
     }
@@ -151,7 +163,12 @@ function draw() {
 
     //tail collision
     if (collision(newHead, snake)) {
-        clearInterval(game);
+        clearInterval(freakvency);
+    }
+
+    //out of lifes
+    if (game.lifeCount < 1) {
+        clearInterval(freakvency);
     }
 
     snake.unshift(newHead);
