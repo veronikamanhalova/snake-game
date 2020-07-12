@@ -8,7 +8,7 @@ let game = {
     scoreElement: document.querySelector("#score"),
     lifeCountElement: document.querySelector("#lifeCount"),
     score: 0,
-    lifeCount: 3
+    lifeCount: 3,
 };
 
 const ctx = game.canvas.getContext("2d");
@@ -83,7 +83,7 @@ function draw() {
     ctx.fillStyle = "black";
     ctx.fillRect(0, 0, canvasW, canvasH);
 
-    snake.forEach(cell => {
+    snake.forEach((cell) => {
         ctx.fillStyle = "green";
         ctx.fillRect(cell.x, cell.y, box, box);
         ctx.strokeStyle = "black";
@@ -111,7 +111,7 @@ function draw() {
             oranges[i].x = Math.floor(Math.random() * colums) * box;
             oranges[i].y = Math.floor(Math.random() * rows) * box;
             game.score++;
-            game.scoreElement.textContent = `${game.score}`;
+            game.scoreElement.textContent = game.score;
             snake.push(snakeX, snakeY);
         }
         ctx.drawImage(orangeImg, oranges[i].x, oranges[i].y);
@@ -139,7 +139,7 @@ function draw() {
     //new head
     let newHead = {
         x: snakeX,
-        y: snakeY
+        y: snakeY,
     };
 
     //out of lifes || tail collision
@@ -197,7 +197,7 @@ function resetGame() {
     //start position of the player
     snake[0] = {
         x: 12 * box,
-        y: 9 * box
+        y: 9 * box,
     };
 
     //generates or regenerates oranges and knifes
@@ -206,7 +206,7 @@ function resetGame() {
             x: Math.floor(Math.random() * colums) * box,
             y: Math.floor(Math.random() * rows) * box,
             width: box,
-            height: box
+            height: box,
         };
     }
     for (i = 0; i < 2; i++) {
@@ -214,7 +214,7 @@ function resetGame() {
             x: Math.floor(Math.random() * colums) * box,
             y: Math.floor(Math.random() * rows) * box,
             width: 3 * box,
-            height: box
+            height: box,
         };
     }
 }
