@@ -112,8 +112,8 @@ function draw() {
             oranges[i].x = Math.floor(Math.random() * colums) * box;
             oranges[i].y = Math.floor(Math.random() * rows) * box;
             gameElements.score++;
-            gameElements.scoreElement.textContent = `${gameElements.score}`;
-            snake.push(snakeX, snakeY);
+            gameElements.scoreElement.textContent = gameElements.score;
+            snake.push({ x: snakeX, y: snakeY });
         }
         ctx.drawImage(orangeImg, oranges[i].x, oranges[i].y);
     }
