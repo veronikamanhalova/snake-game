@@ -1,5 +1,6 @@
 //defines elements of the game
-let game = {
+let gameElements = {
+    game: document.querySelector("#game"),
     canvas: document.querySelector("#canvas"),
     introduction: document.querySelector("#introduction"),
     startButton: document.querySelector(".startButton"),
@@ -8,10 +9,10 @@ let game = {
     scoreElement: document.querySelector("#score"),
     lifeCountElement: document.querySelector("#lifeCount"),
     score: 0,
-    lifeCount: 3
+    lifeCount: 3,
 };
 
-const ctx = game.canvas.getContext("2d");
+const ctx = gameElements.canvas.getContext("2d");
 const canvasW = 500;
 const canvasH = 380;
 
@@ -83,7 +84,7 @@ function draw() {
     ctx.fillStyle = "black";
     ctx.fillRect(0, 0, canvasW, canvasH);
 
-    snake.forEach(cell => {
+    snake.forEach((cell) => {
         ctx.fillStyle = "green";
         ctx.fillRect(cell.x, cell.y, box, box);
         ctx.strokeStyle = "black";
@@ -99,8 +100,8 @@ function draw() {
         if (objectColCheck(snake, knifes[i])) {
             knifes[i].x = Math.floor(Math.random() * colums) * box;
             knifes[i].y = Math.floor(Math.random() * rows) * box;
-            game.lifeCount--;
-            game.lifeCountElement.innerHTML = `${game.lifeCount}/3`;
+            gameElements.lifeCount--;
+            gameElements.lifeCountElement.innerHTML = `${gameElements.lifeCount}/3`;
         }
         ctx.drawImage(knifeImg, knifes[i].x, knifes[i].y);
     }
@@ -110,8 +111,8 @@ function draw() {
         if (objectColCheck(snake, oranges[i])) {
             oranges[i].x = Math.floor(Math.random() * colums) * box;
             oranges[i].y = Math.floor(Math.random() * rows) * box;
-            game.score++;
-            game.scoreElement.textContent = `${game.score}`;
+            gameElements.score++;
+            gameElements.scoreElement.textContent = `${gameElements.score}`;
             snake.push(snakeX, snakeY);
         }
         ctx.drawImage(orangeImg, oranges[i].x, oranges[i].y);
@@ -139,14 +140,14 @@ function draw() {
     //new head
     let newHead = {
         x: snakeX,
-        y: snakeY
+        y: snakeY,
     };
 
     //out of lifes || tail collision
-    if (game.lifeCount < 1 || collision(newHead, snake)) {
+    if (gameElements.lifeCount < 1 || collision(newHead, snake)) {
         //+delay
         changeWindow("gameOver");
-        game.restartButton.addEventListener("click", startGame);
+        gameElements.restartButton.addEventListener("click", startGame);
     } else {
         snake.unshift(newHead);
         // requestAnimationFrame(draw);
@@ -157,7 +158,7 @@ function draw() {
 //shows the introduction to the game and on click on the button goes to the startGame function
 function introduction() {
     changeWindow("introduction");
-    game.startButton.addEventListener("click", startGame);
+    gameElements.startButton.addEventListener("click", startGame);
 }
 
 //resets game, creates objects, changes the window to the game window and calls for update
@@ -169,25 +170,25 @@ function startGame() {
 
 //function that swiches between windows
 function changeWindow(name) {
-    game.introduction.style = "none";
-    game.gameOver.style = "none";
-    game.canvas.style.visibility = "hidden";
+    gameElements.introduction.style = "none";
+    gameElements.gameOver.style = "none";
+    gameElements.game.style = "none";
 
     if (name == "introduction") {
-        game.introduction.style.display = "flex";
+        gameElements.introduction.style.display = "flex";
     } else if (name == "game") {
-        game.canvas.style.visibility = "visible";
+        gameElements.game.style.display = "flex";
     } else if (name == "gameOver") {
-        game.gameOver.style.display = "flex";
+        gameElements.gameOver.style.display = "flex";
     }
 }
 
 function resetGame() {
     //resets variables
-    game.lifeCount = 3;
-    game.score = 0;
-    game.lifeCountElement.innerHTML = `${game.lifeCount}/3`;
-    game.scoreElement.textContent = `${game.score}`;
+    gameElements.lifeCount = 3;
+    gameElements.score = 0;
+    gameElements.lifeCountElement.innerHTML = `${gameElements.lifeCount}/3`;
+    gameElements.scoreElement.textContent = `${gameElements.score}`;
     d = null;
     // deletes all snake cells
     for (var i = 0; i < snake.length; i++) {
@@ -197,7 +198,7 @@ function resetGame() {
     //start position of the player
     snake[0] = {
         x: 12 * box,
-        y: 9 * box
+        y: 9 * box,
     };
 
     //generates or regenerates oranges and knifes
@@ -206,7 +207,7 @@ function resetGame() {
             x: Math.floor(Math.random() * colums) * box,
             y: Math.floor(Math.random() * rows) * box,
             width: box,
-            height: box
+            height: box,
         };
     }
     for (i = 0; i < 2; i++) {
@@ -214,7 +215,7 @@ function resetGame() {
             x: Math.floor(Math.random() * colums) * box,
             y: Math.floor(Math.random() * rows) * box,
             width: 3 * box,
-            height: box
+            height: box,
         };
     }
 }

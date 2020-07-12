@@ -3,7 +3,8 @@ body {
 }
 
 #introduction,
-#gameOver {
+#gameOver,
+#game {
     display: none;
     justify-content: center;
     align-items: center;
